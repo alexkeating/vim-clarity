@@ -19,7 +19,7 @@ echom "Our syntax highlighting code will go here."
 "
 
 " Clustrer
-syn cluster			clarityBaseListCluster	contains=clarityComment,clarityFunc,clarityKey,clarityOperators,clarityExcep,clarityConditional
+syn cluster			clarityBaseListCluster	contains=clarityComment,clarityFunc,clarityKey,clarityOperators,clarityExcep,clarityConditional,clarityNumber,clarityConstant,clarityBoolean
 syn cluster			clarityListCluster		contains=@clarityBaseListCluster,clarityString
 
 
@@ -27,6 +27,7 @@ syn cluster			clarityListCluster		contains=@clarityBaseListCluster,clarityString
 " Rainbow highlighting
 
 syn region			clarityString			start=+"+ skip=+\\\\\|\\"+ end=+"+	contains=@Spell
+syn region			clarityString			start=+u"+ skip=+\\\\\|\\"+ end=+"+	contains=@Spell
 
 syn region clarityParen0           matchgroup=hlLevel0 start="`\=(" end=")" skip="|.\{-}|" contains=@clarityListCluster,clarityParen1
 syn region clarityParen1 contained matchgroup=hlLevel1 start="`\=(" end=")" skip="|.\{-}|" contains=@clarityListCluster,clarityParen2
@@ -41,8 +42,8 @@ syn region clarityParen9 contained matchgroup=hlLevel9 start="`\=(" end=")" skip
 
 
 syntax match clarityComment "\v;;.*"
-syntax match clarityNumber "\vu?[0-9]"
-syntax match clarityConstant "\v(true|false)"
+syntax match clarityNumber "\vu?[0-9]{1,9}"
+syntax match clarityBoolean "\v(true|false)"
 
 " -------------------------------------------
 "  Clarity Operators
@@ -75,7 +76,7 @@ syn keyword clarityFunc		ft-transfer?			get		            get-block-info?
 syn keyword clarityFunc		hash160			                            impl-trait
 syn keyword clarityFunc		index-of			    is-eq		        is-err
 syn keyword clarityFunc		is-none			        is-ok		        is-some
-syn keyword clarityFunc					           log2		        
+syn keyword clarityFunc					            log2		        
 syn keyword clarityFunc		map-delete			    map-get?		    map-insert
 syn keyword clarityFunc		map-set			        		            merge
 syn keyword clarityFunc					            nft-burn?		    nft-get-owner?
@@ -94,7 +95,8 @@ syn keyword clarityFunc     is-in-regtest           stx-liquid-supply
 " -------------------------------
 "  Clarity Keywords
 
-syn keyword clarityKey tx-sender none contract-caller map list tuple
+syn keyword clarityKey none map list tuple principal uint int string respsonse optional buff string-ascii string-utf8 bool
+syn keyword clarityConstant tx-sender contract-caller
 
 
 
@@ -129,8 +131,10 @@ endif
 
 highlight def link clarityComment       Comment
 highlight def link clarityConstant      Constant
+highlight def link clarityBoolean       Boolean
 highlight def link clarityConditional   Conditional
 highlight def link clarityExcep         Exception
+highlight def link clarityString        String
 highlight def link clarityNumber        Number
 highlight def link clarityFunc          Statement
 highlight def link clarityKey           Type
