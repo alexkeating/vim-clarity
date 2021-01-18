@@ -42,7 +42,18 @@ function! clarity#clarityLint#ClarLint()
   " Returns a dictionary from the command
   call s:UnPlaceMarkers()
   let l:resp = systemlist(l:cmd)
-  call s:PlaceMarkers(l:resp, l:contract)
+  let l:json = []
+  let l:json_msg = 0
+  for i in l:resp
+    if i ==? '{'
+      let l:json_msg = 1
+	endif
+	if l:json_msg == 1
+      call add(l:json, i)
+	endif
+  endfor
+
+  call s:PlaceMarkers(l:json, l:contract)
 endfunction
 
 function! s:PlaceMarkers(results, file)
@@ -54,9 +65,12 @@ function! s:PlaceMarkers(results, file)
    let l:index0 = 100
    let l:index  = l:index0
    let l:resp = json_decode(join(a:results))
-   let l:spans =get(l:resp, 'spans')
+   let l:spans = get(l:resp, 'spans')
    let b:clarity_lint_dict = {}
    for span in l:spans
+     if span.start_line == 0
+       let span.start_line = 1
+	 endif
 	 let b:clarity_lint_dict[span.start_line] = l:resp.message
      execute ':sign place '.index.' name=Clarity'.l:resp.level.'Sign'.' line='.span.start_line.' file='.a:file
 	 call add(s:sign_ids, l:index)
