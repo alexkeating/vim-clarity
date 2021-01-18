@@ -1,0 +1,81 @@
+*clarity.txt*  Highlight and lint clarity files
+
+Introduction
+
+This plugin aims to make it easier to work with clarity files
+and the Stacks ecosystem.
+
+
+Commands
+
+                             *:ClarityLint*
+:ClarityLint                 Call clarity-lint on your clarity file
+
+                             *:StxDeployMainnet*
+:StxDeployMainnet {args}     Deploy your current clarity contract to mainnet
+                             required args are detailed below.
+
+                             *:StxDeployTestnet*
+:StxDeployTestnet {args}     Deploy your current clarity contract to the stx
+                             testnet required args are detailed below.
+
+                             *:StxDeployLocal*
+:StxDeployLocal   {args}     Deploy your current clarity contract to the stx
+                             local testnet at localhost:20443 required args are 
+							 detailed below.
+
+							 The args required for the different deploy
+							 commands are below and should be added in the
+							 following order:
+							   contract_name  The name of your contract'
+							   fee            Fee to pay for the contract
+							   nonce          nonce for transaction typically
+							                  0.
+						       payment_key    Key for principal initiating the 
+							                  transaction.
+
+						       Example command:
+							     :StxDeployLocal counter 5000 4 21d43d2ae0da1d9d04cfcaac7d397a33733881081f0b2cd038062cf0ccbb752601
+							   
+
+
+Configuration
+
+g:clarity_lint_sign_error        *g:clarity_lint_sign_error*
+
+
+  Type: |String|
+  Default: `'>>'`
+
+  The sign for errors in the sign gutter.
+
+
+g:clarity_lint_sign_warning      *g:clarity_lint_sign_warning*
+
+  Type: |String|
+  Default: `'--'`
+
+  The sign for style warnings in the sign gutter.
+
+
+g:clarity_lint_sign_info         *g:clarity_lint_sign_warning*
+
+  Type: |String|
+  Default: `g:clarity_lint_sign_warning
+
+  The sign for "info" markers in the sign gutter.
+
+
+g:clarity_isk                    *g:clarity_isk*
+
+  Type: |iskeyword|
+  Default: `38,42,43,45,47-58,60-63,64-90,97-122,_`
+
+  Modify the |iskeyword} list for the clarity file type.
+
+
+
+
+
+vim: ft=help tw=78 et ts=2 sw=2 sts=2 norl
+

@@ -32,6 +32,10 @@ execute 'sign define ClarityInfoSign text=' . s:EscapeSignText(g:clarity_lint_si
 
 
 function! clarity#clarityLint#ClarLint()
+  if !executable('clarity-lint')
+    echoerr 'clarity-lint is missing please install clarity-lint using cargo' 
+	return
+  endif
   let l:contract  = expand('%:p')
   let l:cmd = 'clarity-lint' . ' --file ' . l:contract
 
