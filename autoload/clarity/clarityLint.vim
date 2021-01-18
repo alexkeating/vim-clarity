@@ -34,7 +34,7 @@ execute 'sign define ClarityInfoSign text=' . s:EscapeSignText(g:clarity_lint_si
 function! clarity#clarityLint#ClarLint()
   if !executable('clarity-lint')
     echoerr 'clarity-lint is missing please install clarity-lint using cargo' 
-	return
+    return
   endif
   let l:contract  = expand('%:p')
   let l:cmd = 'clarity-lint' . ' --file ' . l:contract
@@ -47,10 +47,10 @@ function! clarity#clarityLint#ClarLint()
   for i in l:resp
     if i ==? '{'
       let l:json_msg = 1
-	endif
-	if l:json_msg == 1
+    endif
+    if l:json_msg == 1
       call add(l:json, i)
-	endif
+    endif
   endfor
 
   call s:PlaceMarkers(l:json, l:contract)
@@ -58,7 +58,7 @@ endfunction
 
 function! s:PlaceMarkers(results, file)
    if len(a:results) == 0
-		return 
+        return 
    endif
 
    let s:sign_ids = []
@@ -70,10 +70,10 @@ function! s:PlaceMarkers(results, file)
    for span in l:spans
      if span.start_line == 0
        let span.start_line = 1
-	 endif
-	 let b:clarity_lint_dict[span.start_line] = l:resp.message
+     endif
+     let b:clarity_lint_dict[span.start_line] = l:resp.message
      execute ':sign place '.index.' name=Clarity'.l:resp.level.'Sign'.' line='.span.start_line.' file='.a:file
-	 call add(s:sign_ids, l:index)
+     call add(s:sign_ids, l:index)
      let l:index += 1
    endfor
 endfunction
