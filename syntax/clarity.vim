@@ -11,9 +11,6 @@ else
 endif
 
 
-echom "Our syntax highlighting code will go here."
-
-
 " Functions
 " syntax region clarityFunction start="\v(\@<=\()(define-map)\s([[:alnum:]][[:alnum:]!$%&*+-.\/:<=>?@^_~]*)\s\+" end="(?=\\))"
 "
